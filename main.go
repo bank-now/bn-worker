@@ -17,7 +17,7 @@ import (
 const (
 	name    = "worker"
 	version = "v1"
-	topic   = "interest-calculation"
+	topic   = "interest-calculation-v1"
 )
 
 var (
