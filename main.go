@@ -17,7 +17,7 @@ import (
 var (
 	showVersion = flag.Bool("version", false, "print version string")
 
-	channel       = flag.String("channel", "", "NSQ channel")
+	channel       = flag.String("channel", "v1", "NSQ channel")
 	maxInFlight   = flag.Int("max-in-flight", 200, "max number of messages to allow in flight")
 	totalMessages = flag.Int("n", 0, "total messages to show (will wait if starved)")
 	printTopic    = flag.Bool("print-topic", false, "print topic name where message was received")
