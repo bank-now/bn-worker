@@ -2,11 +2,16 @@ package main
 
 import (
 	"fmt"
-	"github.com/bank-now/bn-worker/io"
+	"github.com/bank-now/bn-common-io/queues/sub"
 )
 
 func main() {
-	io.Setup(handle)
+
+	c := sub.Config{Topic: "interest-calculation-v1",
+		Version: "v1",
+		Name:    "worker",
+		F:       handle}
+	sub.Subscribe(c)
 
 }
 
