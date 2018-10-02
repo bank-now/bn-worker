@@ -14,10 +14,16 @@ import (
 	"github.com/nsqio/go-nsq"
 )
 
+const (
+	name    = "worker"
+	version = "v1"
+	topic   = "interest-calculation"
+)
+
 var (
 	showVersion = flag.Bool("version", false, "print version string")
 
-	channel       = flag.String("channel", "v1", "NSQ channel")
+	channel       = flag.String("channel", "default", "NSQ channel")
 	maxInFlight   = flag.Int("max-in-flight", 200, "max number of messages to allow in flight")
 	totalMessages = flag.Int("n", 0, "total messages to show (will wait if starved)")
 	printTopic    = flag.Bool("print-topic", false, "print topic name where message was received")
@@ -44,7 +50,7 @@ func init() {
 	flag.Var(&topics, "topic", "NSQ topic (may be given multiple times)")
 
 	nsqdTCPAddrs = append(nsqdTCPAddrs, "192.168.88.24:4150")
-	topics = append(topics, "interest-calculation")
+	topics = append(topics, topic)
 
 }
 
@@ -89,7 +95,7 @@ func main() {
 	flag.Parse()
 
 	if *showVersion {
-		fmt.Printf("nsq_tail v%s\n", 1)
+		fmt.Printf("%s-%s", name, version)
 		return
 	}
 
