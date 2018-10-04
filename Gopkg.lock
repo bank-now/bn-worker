@@ -3,9 +3,10 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:895c1d8473884a94d16f6e29a36770a70ea976ae499ac743a5c1db6350697c54"
+  digest = "1:9f8a27aa9cc9a9dad135751f8a6d6702a81d66e1e3a1ae966429930c3c55ca47"
   name = "github.com/bank-now/bn-common-io"
   packages = [
+    "queues/pub",
     "queues/sub",
     "rest",
   ]
@@ -14,14 +15,14 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:1fa0da88e9053a2081abd0cacedab3ae50c3a4205c320e515d1278f9d38f4346"
+  digest = "1:4d1a1f2a32002f4b53bb312be7c0418e0cfe8dff41638f6045ab3d7e2616434b"
   name = "github.com/bank-now/bn-common-model"
   packages = [
     "common/model",
     "common/operation",
   ]
   pruneopts = "UT"
-  revision = "ce63d6dad00bde4822b4de3f561d7beaca5b8855"
+  revision = "f52b678ad6f7b5e754afc1a91ea530c0563db163"
 
 [[projects]]
   branch = "master"
@@ -30,6 +31,14 @@
   packages = ["."]
   pruneopts = "UT"
   revision = "2e65f85255dbc3072edf28d6b5b8efc472979f5a"
+
+[[projects]]
+  digest = "1:3a26588bc48b96825977c1b3df964f8fd842cd6860cc26370588d3563433cf11"
+  name = "github.com/google/uuid"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "d460ce9f8df2e77fb1ba55ca87fafed96c607494"
+  version = "v1.0.0"
 
 [[projects]]
   digest = "1:bb48459ec76efe45f13094480296462ef5c9aaa56662918819b7a8fce3155b8b"
@@ -43,10 +52,13 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/bank-now/bn-common-io/queues/pub",
     "github.com/bank-now/bn-common-io/queues/sub",
     "github.com/bank-now/bn-common-io/rest",
     "github.com/bank-now/bn-common-model/common/model",
     "github.com/bank-now/bn-common-model/common/operation",
+    "github.com/google/uuid",
+    "github.com/nsqio/go-nsq",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

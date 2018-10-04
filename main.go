@@ -1,12 +1,15 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"github.com/bank-now/bn-common-io/queues/pub"
 	"github.com/bank-now/bn-common-io/queues/sub"
 	"github.com/bank-now/bn-common-model/common/model"
 	"github.com/bank-now/bn-common-model/common/operation"
 	"github.com/bank-now/bn-worker/controller"
 	"github.com/google/uuid"
+	"github.com/nsqio/go-nsq"
 	"math"
 	"time"
 )
@@ -16,7 +19,22 @@ const (
 	version = "v1"
 )
 
+var (
+	producer *nsq.Producer
+)
+
 func main() {
+	var err error
+
+	pubConfig := pub.Config{Topic: operation.WriteOperationV1Topic,
+		Name:    name,
+		Version: version,
+		Address: "192.168.88.24:4150"}
+	producer, err = pub.Setup(pubConfig)
+	if err != nil {
+		//Fatal
+	}
+
 	c := sub.Config{Topic: operation.InterestOperationV1Topic,
 		Name:    name,
 		Version: version,
@@ -56,7 +74,16 @@ func handle(b []byte) {
 		SystemCode: "INTEREST for Day",
 		Timestamp:  time.Now()}
 
-	fmt.Println(interestTransaction)
+	intTrxB, err := json.Marshal(interestTransaction)
+	// TODO: handle err
+	write := operation.WriteOperationV1{
+		Table:  model.TransactionTable,
+		Method: "POST",
+		Item:   intTrxB}
+
+	writeB, err := json.Marshal(write)
+	// TODO: handle err
+	producer.Publish(operation.WriteOperationV1Topic, writeB)
 
 }
 
