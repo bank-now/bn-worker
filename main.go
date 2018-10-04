@@ -9,6 +9,7 @@ import (
 	"github.com/bank-now/bn-worker/controller"
 	"github.com/google/uuid"
 	"github.com/nsqio/go-nsq"
+	"log"
 	"math"
 	"time"
 )
@@ -31,7 +32,7 @@ func main() {
 		Address: "192.168.88.24:4150"}
 	producer, err = pub.Setup(pubConfig)
 	if err != nil {
-		//Fatal
+		log.Fatal(err)
 	}
 
 	c := sub.Config{Topic: operation.InterestOperationV1Topic,
