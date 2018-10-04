@@ -6,11 +6,15 @@ import (
 	"github.com/bank-now/bn-common-model/common/operation"
 )
 
-func main() {
+const (
+	name    = "worker"
+	version = "v1"
+)
 
+func main() {
 	c := sub.Config{Topic: operation.InterestOperationV1Topic,
-		Name:    "worker",
-		Version: "v1",
+		Name:    name,
+		Version: version,
 		F:       handle}
 	sub.Subscribe(c)
 
