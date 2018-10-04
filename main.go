@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/bank-now/bn-common-io/queues/sub"
+	"github.com/bank-now/bn-common-model/common/operation"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
@@ -16,5 +18,9 @@ func main() {
 }
 
 func handle(b []byte) {
-	fmt.Println(string(b))
+	i, err := operation.GetInterestOperation(b)
+	if err != nil {
+		logrus.Errorln("Did not understand: ", err)
+	}
+	fmt.Println(i)
 }
