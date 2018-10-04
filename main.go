@@ -17,6 +17,7 @@ import (
 const (
 	name    = "worker"
 	version = "v1"
+	address = "192.168.88.24:4150"
 )
 
 var (
@@ -29,15 +30,17 @@ func main() {
 	pubConfig := pub.Config{Topic: operation.WriteOperationV1Topic,
 		Name:    name,
 		Version: version,
-		Address: "192.168.88.24:4150"}
+		Address: address}
 	producer, err = pub.Setup(pubConfig)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	c := sub.Config{Topic: operation.InterestOperationV1Topic,
+	c := sub.Config{
+		Topic:   operation.InterestOperationV1Topic,
 		Name:    name,
 		Version: version,
+		Address: address,
 		F:       handle}
 	sub.Subscribe(c)
 
