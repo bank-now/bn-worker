@@ -29,6 +29,10 @@
   branch = "master"
   name = "github.com/bank-now/bn-common-io"
 
+[[constraint]]
+  branch = "master"
+  name = "github.com/bank-now/bn-common-model"
+
 [prune]
   go-tests = true
   unused-packages = true

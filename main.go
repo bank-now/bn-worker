@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/bank-now/bn-common-io/queues/sub"
 	"github.com/bank-now/bn-common-model/common/operation"
+	"github.com/bank-now/bn-worker/controller"
 )
 
 const (
@@ -25,5 +26,11 @@ func handle(b []byte) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(i.Account)
+	fmt.Println("Fetching account:", i.Account)
+
+	controller.GetTransactionsByAccountId(i.Account)
+	for _, trx := range *trxs {
+		fmt.Println(trx.Timestamp, trx.SystemCode, trx.Amount)
+	}
+
 }

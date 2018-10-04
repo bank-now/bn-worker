@@ -3,19 +3,25 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:b1931a7492da604d3b766764c80ee191279eedc093982f87b92d92b469914528"
+  digest = "1:895c1d8473884a94d16f6e29a36770a70ea976ae499ac743a5c1db6350697c54"
   name = "github.com/bank-now/bn-common-io"
-  packages = ["queues/sub"]
+  packages = [
+    "queues/sub",
+    "rest",
+  ]
   pruneopts = "UT"
-  revision = "d922630b2d1dfaa3731e2fa479fed1143d749ee3"
+  revision = "deb35c356bfc593a5d90390a164b77674049eb72"
 
 [[projects]]
   branch = "master"
-  digest = "1:d424e75994a59f7bb4924745fb80944ec69843d77f5d118f86e6c3dc974743e1"
+  digest = "1:016c1fe756f11901cda76187cc85908a8ca1f2e489e15bce24835236d0e01b96"
   name = "github.com/bank-now/bn-common-model"
-  packages = ["common/model"]
+  packages = [
+    "common/model",
+    "common/operation",
+  ]
   pruneopts = "UT"
-  revision = "e1dc42badb5bd0989d875c23fff4328032f1a4b6"
+  revision = "fc52edcc124f0d59963304342a6d9799a55f7c13"
 
 [[projects]]
   branch = "master"
@@ -36,6 +42,11 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["github.com/bank-now/bn-common-io/queues/sub"]
+  input-imports = [
+    "github.com/bank-now/bn-common-io/queues/sub",
+    "github.com/bank-now/bn-common-io/rest",
+    "github.com/bank-now/bn-common-model/common/model",
+    "github.com/bank-now/bn-common-model/common/operation",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
