@@ -4,27 +4,22 @@ import (
 	"fmt"
 	"github.com/bank-now/bn-common-io/queues/sub"
 	"github.com/bank-now/bn-common-model/common/operation"
-	"github.com/sirupsen/logrus"
 )
 
 func main() {
 
-	c := sub.Config{Topic: "interest-calculation-v1",
-		Version: "v1",
+	c := sub.Config{Topic: operation.InterestOperationV1Topic,
 		Name:    "worker",
+		Version: "v1",
 		F:       handle}
 	sub.Subscribe(c)
 
 }
 
 func handle(b []byte) {
-
-	s := string(b)
-	fmt.Println(s)
-
 	i, err := operation.GetInterestOperation(b)
 	if err != nil {
-		logrus.Errorln("Did not understand: ", err)
+		panic(err)
 	}
 	fmt.Println(i.Account)
 }
