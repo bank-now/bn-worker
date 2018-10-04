@@ -14,14 +14,14 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:016c1fe756f11901cda76187cc85908a8ca1f2e489e15bce24835236d0e01b96"
+  digest = "1:1fa0da88e9053a2081abd0cacedab3ae50c3a4205c320e515d1278f9d38f4346"
   name = "github.com/bank-now/bn-common-model"
   packages = [
     "common/model",
     "common/operation",
   ]
   pruneopts = "UT"
-  revision = "fc52edcc124f0d59963304342a6d9799a55f7c13"
+  revision = "ce63d6dad00bde4822b4de3f561d7beaca5b8855"
 
 [[projects]]
   branch = "master"
