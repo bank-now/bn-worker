@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/bank-now/bn-common-io/queues/pub"
 	"github.com/bank-now/bn-common-io/queues/sub"
 	"github.com/bank-now/bn-common-model/common/model"
@@ -48,42 +47,58 @@ func handle(b []byte) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Fetching account:", i.Account)
 
-	trxSlice, err := controller.GetTransactionsByAccountId(i.Account)
+	transactions, err := getOrderedTransactions(i.Account)
 	if err != nil {
 		//TODO: dead-letter queue!
+	}
+
+	item := doInterestCalculation(i.Account, transactions)
+	writeTransaction(item)
+
+}
+
+func getOrderedTransactions(account string) (transactions []model.Transaction, err error) {
+	trxSlice, err := controller.GetTransactionsByAccountId(account)
+	if err != nil {
 		return
 	}
-	transactions := model.OrderTransactions(*trxSlice)
+	transactions = model.OrderTransactions(*trxSlice)
+	return
+
+}
+
+func doInterestCalculation(account string, transactions []model.Transaction) (transaction model.Transaction) {
 	var balance float64
 	balance = 0
 	for _, trx := range transactions {
 		balance += trx.Amount
 	}
-	fmt.Println("Balance is: ", balance)
 	interest := calculateInterest(balance, 1)
-	fmt.Println("Interest is: ", interest)
-
-	u, err := uuid.NewRandom()
-
-	interestTransaction := model.Transaction{
+	u, _ := uuid.NewRandom()
+	transaction = model.Transaction{
 		ID:         u.String(),
 		Amount:     interest,
-		AccountID:  i.Account,
+		AccountID:  account,
 		SystemCode: "INTEREST for Day",
 		Timestamp:  time.Now()}
 
-	intTrxB, err := json.Marshal(interestTransaction)
-	// TODO: handle err
+	return
+}
+
+func writeTransaction(item model.Transaction) (err error) {
+	intTrxB, _ := json.Marshal(item)
 	write := operation.WriteOperationV1{
 		Table:  model.TransactionTable,
 		Method: "POST",
 		Item:   intTrxB}
 
 	writeB, err := json.Marshal(write)
-	// TODO: handle err
+	if err != nil {
+		return
+	}
 	producer.Publish(operation.WriteOperationV1Topic, writeB)
+	return
 
 }
 
