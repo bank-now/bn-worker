@@ -73,8 +73,7 @@ func getOrderedTransactions(account string) (transactions []model.Transaction, e
 }
 
 func doInterestCalculation(account string, transactions []model.Transaction) (transaction model.Transaction) {
-	var balance float64
-	balance = 0
+	var balance float64 = 0
 	for _, trx := range transactions {
 		balance += trx.Amount
 	}
@@ -114,7 +113,7 @@ func calculateInterest(balance float64, days float64) float64 {
 	i = 0.1    //10% per annum
 	n = 365.25 //Days per year
 	inner = i/n + 1
-	power = 1
+	power = 1 //Super wrong
 	brackets := math.Pow(inner, power)
 	return balance*brackets - balance
 
