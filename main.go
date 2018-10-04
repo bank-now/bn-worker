@@ -18,9 +18,13 @@ func main() {
 }
 
 func handle(b []byte) {
+
+	s := string(b)
+	fmt.Println(s)
+
 	i, err := operation.GetInterestOperation(b)
 	if err != nil {
 		logrus.Errorln("Did not understand: ", err)
 	}
-	fmt.Println(i)
+	fmt.Println(i.Account)
 }
