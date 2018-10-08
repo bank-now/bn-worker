@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/bank-now/bn-common-io/queues/pub"
 	"github.com/bank-now/bn-common-io/queues/sub"
 	"github.com/bank-now/bn-common-model/common/model"
@@ -15,12 +16,14 @@ import (
 )
 
 const (
-	name    = "worker"
-	version = "v1"
-	address = "192.168.88.24:4150"
+	Name    = "worker"
+	Version = "v1"
+	Address = "192.168.88.24:4150"
+	Action  = "workItem"
 )
 
 var (
+	fullName = fmt.Sprint(Name, "-", Version, "-", Action)
 	producer *nsq.Producer
 )
 
@@ -28,9 +31,9 @@ func main() {
 	var err error
 
 	pubConfig := pub.Config{Topic: operation.WriteOperationV1Topic,
-		Name:    name,
-		Version: version,
-		Address: address}
+		Name:    Name,
+		Version: Version,
+		Address: Address}
 	producer, err = pub.Setup(pubConfig)
 	if err != nil {
 		log.Fatal(err)
@@ -38,9 +41,9 @@ func main() {
 
 	c := sub.Config{
 		Topic:   operation.InterestOperationV1Topic,
-		Name:    name,
-		Version: version,
-		Address: address,
+		Name:    Name,
+		Version: Version,
+		Address: Address,
 		F:       handle}
 	sub.Subscribe(c)
 
