@@ -40,7 +40,7 @@ func main() {
 	}
 
 	c := sub.Config{
-		Topic:   operation.InterestOperationV1Topic,
+		Topic:   operation.InterestOperationV2Topic,
 		Name:    Name,
 		Version: Version,
 		Address: Address,

@@ -3,26 +3,53 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:7c9491caad28f8da8c16702cee63a11f62c6ec37d78d81e57f16dcdd5d7ee9e6"
+  digest = "1:cd017169032e41a6829da266737ff8021f5c0e983a34db8dc2d5d8383f39e885"
   name = "github.com/bank-now/bn-common-io"
   packages = [
     "queues/pub",
     "queues/sub",
     "rest",
+    "util",
+    "zipkin",
   ]
   pruneopts = "UT"
-  revision = "e0c5a6173945d09a67730ec44acff96983462614"
+  revision = "022ae5a9a0efc70825837a063b1f4a41c54e28a8"
 
 [[projects]]
   branch = "master"
-  digest = "1:7e591a9b814dc50f8964c6c64a983d2dc20efb4c6b2a99a3f5e4e2b95ae9b29f"
+  digest = "1:eea59beb4b58f5a6d39d7fc3d56c5942486572c285c87838f937afa6f9354972"
   name = "github.com/bank-now/bn-common-model"
   packages = [
     "common/model",
     "common/operation",
   ]
   pruneopts = "UT"
-  revision = "f2a05cf3fb22e492a8be80aaedc25ed888246fe2"
+  revision = "df6e7ad1444f4cc5f3e225934499a62e50e2e484"
+
+[[projects]]
+  digest = "1:94d8c9e3a4954505ca89243e2121180972eecf8e3d160f3b34a48825ddd95cc1"
+  name = "github.com/golang-plus/errors"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "a61c34ead85085f3e1b87b8c04e49bbf60c99fb1"
+  version = "v1.0.0"
+
+[[projects]]
+  digest = "1:224bf08a201edf15ec9f086549321257d5a2ee0d23dc649e7e6ad90ce5502439"
+  name = "github.com/golang-plus/uuid"
+  packages = [
+    ".",
+    "internal",
+    "internal/dcesecurity",
+    "internal/namebased",
+    "internal/namebased/md5",
+    "internal/namebased/sha1",
+    "internal/random",
+    "internal/timebased",
+  ]
+  pruneopts = "UT"
+  revision = "a0510c37ef1f49c8290c3a9911d0f7f9ed24d335"
+  version = "v1.0.0"
 
 [[projects]]
   branch = "master"
