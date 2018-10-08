@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/bank-now/bn-common-io/queues/pub"
 	"github.com/bank-now/bn-common-io/queues/sub"
+	"github.com/bank-now/bn-common-io/zipkin"
 	"github.com/bank-now/bn-common-model/common/model"
 	"github.com/bank-now/bn-common-model/common/operation"
 	"github.com/bank-now/bn-worker/controller"
@@ -16,10 +17,11 @@ import (
 )
 
 const (
-	Name    = "worker"
-	Version = "v1"
-	Address = "192.168.88.24:4150"
-	Action  = "workItem"
+	Name      = "worker"
+	Version   = "v1"
+	Address   = "192.168.88.24:4150"
+	Action    = "workItem"
+	ZipKinUrl = "http://192.168.88.24:9411/api/v2/spans"
 )
 
 var (
@@ -55,27 +57,36 @@ func handle(b []byte) {
 		panic(err)
 	}
 
-	transactions, err := getOrderedTransactions(i.Account)
+	transactions, err, trxGhost := getOrderedTransactions(i.Account, i.Ghost)
 	if err != nil {
 		//TODO: dead-letter queue!
 	}
 
-	item := doInterestCalculation(i.Account, transactions)
-	writeTransaction(item)
+	item, intGhost := doInterestCalculation(i.Account, transactions, trxGhost)
+
+	writeTransaction(item, intGhost)
 
 }
 
-func getOrderedTransactions(account string) (transactions []model.Transaction, err error) {
+func getOrderedTransactions(account string, parent zipkin.Ghost) (transactions []model.Transaction, err error, resultGhost zipkin.Ghost) {
+	start := time.Now()
 	trxSlice, err := controller.GetTransactionsByAccountId(account)
+	ns := time.Since(start).Nanoseconds()
+	ghost := zipkin.LogChild(parent, ZipKinUrl, "getOrderedTransactions", ns)
 	if err != nil {
 		return
 	}
+
+	start = time.Now()
 	transactions = model.OrderTransactions(*trxSlice)
+	ns = time.Since(start).Nanoseconds()
+	resultGhost = zipkin.LogChild(ghost, ZipKinUrl, "OrderTransactions", ns)
 	return
 
 }
 
-func doInterestCalculation(account string, transactions []model.Transaction) (transaction model.Transaction) {
+func doInterestCalculation(account string, transactions []model.Transaction, parent zipkin.Ghost) (transaction model.Transaction, resultGhost zipkin.Ghost) {
+	start := time.Now()
 	var balance float64 = 0
 	for _, trx := range transactions {
 		balance += trx.Amount
@@ -89,10 +100,14 @@ func doInterestCalculation(account string, transactions []model.Transaction) (tr
 		SystemCode: "INTEREST for Day",
 		Timestamp:  time.Now()}
 
+	ns := time.Since(start).Nanoseconds()
+	resultGhost = zipkin.LogChild(parent, ZipKinUrl, "doInterestCalculation", ns)
 	return
+
 }
 
-func writeTransaction(item model.Transaction) (err error) {
+func writeTransaction(item model.Transaction, parent zipkin.Ghost) (err error, resultGhost zipkin.Ghost) {
+	start := time.Now()
 	intTrxB, _ := json.Marshal(item)
 	write := operation.WriteOperationV1{
 		Table:  model.TransactionTable,
@@ -101,9 +116,13 @@ func writeTransaction(item model.Transaction) (err error) {
 
 	writeB, err := json.Marshal(write)
 	if err != nil {
+		ns := time.Since(start).Nanoseconds()
+		resultGhost = zipkin.LogChild(parent, ZipKinUrl, "writeTransaction", ns)
 		return
 	}
 	producer.Publish(operation.WriteOperationV1Topic, writeB)
+	ns := time.Since(start).Nanoseconds()
+	resultGhost = zipkin.LogChild(parent, ZipKinUrl, "writeTransaction", ns)
 	return
 
 }
