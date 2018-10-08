@@ -3,7 +3,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:cd017169032e41a6829da266737ff8021f5c0e983a34db8dc2d5d8383f39e885"
+  digest = "1:43d8b6d764c9c5e117b7c4d0e4234f6d4cf1bf41d77803af6a51a6c383418c3f"
   name = "github.com/bank-now/bn-common-io"
   packages = [
     "queues/pub",
@@ -13,7 +13,7 @@
     "zipkin",
   ]
   pruneopts = "UT"
-  revision = "022ae5a9a0efc70825837a063b1f4a41c54e28a8"
+  revision = "2cd7cf838e2bcb9a8ad9b8354b37323aed3ec706"
 
 [[projects]]
   branch = "master"
@@ -82,6 +82,7 @@
     "github.com/bank-now/bn-common-io/queues/pub",
     "github.com/bank-now/bn-common-io/queues/sub",
     "github.com/bank-now/bn-common-io/rest",
+    "github.com/bank-now/bn-common-io/zipkin",
     "github.com/bank-now/bn-common-model/common/model",
     "github.com/bank-now/bn-common-model/common/operation",
     "github.com/google/uuid",
