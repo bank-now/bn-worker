@@ -3,39 +3,32 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:43d8b6d764c9c5e117b7c4d0e4234f6d4cf1bf41d77803af6a51a6c383418c3f"
   name = "github.com/bank-now/bn-common-io"
   packages = [
     "queues/pub",
     "queues/sub",
     "rest",
     "util",
-    "zipkin",
+    "zipkin"
   ]
-  pruneopts = "UT"
-  revision = "2cd7cf838e2bcb9a8ad9b8354b37323aed3ec706"
+  revision = "2a9b1cdbe83027b2f15b28390c2b1cd8b74c679d"
 
 [[projects]]
   branch = "master"
-  digest = "1:eea59beb4b58f5a6d39d7fc3d56c5942486572c285c87838f937afa6f9354972"
   name = "github.com/bank-now/bn-common-model"
   packages = [
     "common/model",
-    "common/operation",
+    "common/operation"
   ]
-  pruneopts = "UT"
   revision = "df6e7ad1444f4cc5f3e225934499a62e50e2e484"
 
 [[projects]]
-  digest = "1:94d8c9e3a4954505ca89243e2121180972eecf8e3d160f3b34a48825ddd95cc1"
   name = "github.com/golang-plus/errors"
   packages = ["."]
-  pruneopts = "UT"
   revision = "a61c34ead85085f3e1b87b8c04e49bbf60c99fb1"
   version = "v1.0.0"
 
 [[projects]]
-  digest = "1:224bf08a201edf15ec9f086549321257d5a2ee0d23dc649e7e6ad90ce5502439"
   name = "github.com/golang-plus/uuid"
   packages = [
     ".",
@@ -45,48 +38,32 @@
     "internal/namebased/md5",
     "internal/namebased/sha1",
     "internal/random",
-    "internal/timebased",
+    "internal/timebased"
   ]
-  pruneopts = "UT"
   revision = "a0510c37ef1f49c8290c3a9911d0f7f9ed24d335"
   version = "v1.0.0"
 
 [[projects]]
   branch = "master"
-  digest = "1:4a0c6bb4805508a6287675fac876be2ac1182539ca8a32468d8128882e9d5009"
   name = "github.com/golang/snappy"
   packages = ["."]
-  pruneopts = "UT"
   revision = "2e65f85255dbc3072edf28d6b5b8efc472979f5a"
 
 [[projects]]
-  digest = "1:3a26588bc48b96825977c1b3df964f8fd842cd6860cc26370588d3563433cf11"
   name = "github.com/google/uuid"
   packages = ["."]
-  pruneopts = "UT"
   revision = "d460ce9f8df2e77fb1ba55ca87fafed96c607494"
   version = "v1.0.0"
 
 [[projects]]
-  digest = "1:bb48459ec76efe45f13094480296462ef5c9aaa56662918819b7a8fce3155b8b"
   name = "github.com/nsqio/go-nsq"
   packages = ["."]
-  pruneopts = "UT"
   revision = "eee57a3ac4174c55924125bb15eeeda8cffb6e6f"
   version = "v1.0.7"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = [
-    "github.com/bank-now/bn-common-io/queues/pub",
-    "github.com/bank-now/bn-common-io/queues/sub",
-    "github.com/bank-now/bn-common-io/rest",
-    "github.com/bank-now/bn-common-io/zipkin",
-    "github.com/bank-now/bn-common-model/common/model",
-    "github.com/bank-now/bn-common-model/common/operation",
-    "github.com/google/uuid",
-    "github.com/nsqio/go-nsq",
-  ]
+  inputs-digest = "a0804fec3a24787bda2889851fb2216300b741687797e9c1836be334a324dc79"
   solver-name = "gps-cdcl"
   solver-version = 1

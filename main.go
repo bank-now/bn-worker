@@ -71,15 +71,15 @@ func handle(b []byte) {
 func getOrderedTransactions(account string, parent zipkin.Ghost) (transactions []model.Transaction, err error, resultGhost zipkin.Ghost) {
 	start := time.Now()
 	trxSlice, err := controller.GetTransactionsByAccountId(account)
-	ns := time.Since(start).Nanoseconds()
-	ghost := zipkin.LogChild(parent, ZipKinUrl, "getOrderedTransactions", ns)
+	ns := time.Since(start)
+	ghost := zipkin.LogChild(parent, ZipKinUrl, "getTransactions", ns)
 	if err != nil {
 		return
 	}
 
 	start = time.Now()
 	transactions = model.OrderTransactions(*trxSlice)
-	ns = time.Since(start).Nanoseconds()
+	ns = time.Since(start)
 	resultGhost = zipkin.LogChild(ghost, ZipKinUrl, "OrderTransactions", ns)
 	return
 
@@ -100,7 +100,7 @@ func doInterestCalculation(account string, transactions []model.Transaction, par
 		SystemCode: "INTEREST for Day",
 		Timestamp:  time.Now()}
 
-	ns := time.Since(start).Nanoseconds()
+	ns := time.Since(start)
 	resultGhost = zipkin.LogChild(parent, ZipKinUrl, "doInterestCalculation", ns)
 	return
 
@@ -116,12 +116,12 @@ func writeTransaction(item model.Transaction, parent zipkin.Ghost) (err error, r
 
 	writeB, err := json.Marshal(write)
 	if err != nil {
-		ns := time.Since(start).Nanoseconds()
+		ns := time.Since(start)
 		resultGhost = zipkin.LogChild(parent, ZipKinUrl, "writeTransaction", ns)
 		return
 	}
 	producer.Publish(operation.WriteOperationV1Topic, writeB)
-	ns := time.Since(start).Nanoseconds()
+	ns := time.Since(start)
 	resultGhost = zipkin.LogChild(parent, ZipKinUrl, "writeTransaction", ns)
 	return
 
